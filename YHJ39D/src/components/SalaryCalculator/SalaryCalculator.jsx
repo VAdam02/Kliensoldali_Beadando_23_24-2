@@ -5,13 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 
-
+import TextboxWithLabel from "@/components/TextboxWithLabel/TextboxWithLabel"
 
 const SalaryCalculator = () => {
   return (
@@ -25,13 +24,9 @@ const SalaryCalculator = () => {
         <CardTitle>BENDI BÉRÉNEK KISZÁMÍTÁSA</CardTitle>
       </CardHeader>
       <CardContent>
-        <Label htmlFor="name">Családtag neve</Label>
-        <Input type="text" placeholder="Bendi" id="name" />
-        <small>Add meg a családtag nevét!</small>
+        <TextboxWithLabel label="Családtag neve" description="Add meg a családtag nevét!" placeholder="Bendi" />
 
-        <Label htmlFor="grosssalary">Bruttó bér</Label>
-        <Input type="text" placeholder="100.000 Ft" id="grosssalary" />
-        <small>Add meg a bruttó béredet!</small>
+        <TextboxWithLabel label="Bruttó bér" description="Add meg a bruttó béredet!" placeholder="100.000 Ft" />
 
         <Slider defaultValue={[100000]} max={10000000} step={1} />
         <Button variant="outline">-1%</Button>

@@ -7,8 +7,8 @@ _Kliensoldali webprogramozás 1. beadandó 2023-24-2_
 Kérlek, töltsétek ki az adataitokkal beadás előtt!
 
 ```txt
-<Hallgató neve>
-<Neptun kódja>
+Vilányi Ádám
+YHJ39D
 Kliensoldali webprogramozás - beadandó
 Ezt a megoldást a fent írt hallgató küldte be és készítette a Kliensoldali webprogramozás kurzus számonkéréséhez.
 Kijelentem, hogy ez a megoldás a saját munkám. Nem másoltam vagy használtam harmadik féltől
@@ -25,13 +25,13 @@ A fegyelmi vétség legsúlyosabb következménye a hallgató elbocsátása az e
 Kérlek, beadás előtt töltsétek ki, hogy mely részfeladatokat oldottátok meg!
 
 ```txt
--[ ] Az alkalmazás legalább 4 komponensből áll. (Enélkül a beadandót nem fogadjuk el.) (1pt)
+-[X] Az alkalmazás legalább 4 komponensből áll. (Enélkül a beadandót nem fogadjuk el.) (1pt)
 Tehát léteznek a következő komponensek:  
   - Szöveges beviteli mező címkével
   - Egyedi beviteli komponens, mellyel az kedvezményezett eltartottak és a nem kedvezményezett eltartottak számát tudjuk megadni
   - Friss házasokra megadására vonatkozó komponens.
   - Jogosultság/Nem jogosultság megjelenítésére vonatkozó komponens
--[ ] Az alkalmazásban a komponenseket logikusan, funkciók szerint szétbontva hozta létre, ügyelve a tárgyon elsajátított alapelvekre. (2pt)
+-[X] Az alkalmazásban a komponenseket logikusan, funkciók szerint szétbontva hozta létre, ügyelve a tárgyon elsajátított alapelvekre. (2pt)
 - Bérkalkulátor
   -[ ] Az alkalmazás a bruttó jövedelem megadásakor automatikusan kiszámítja a nettó fizetést, mely az alkalmazás állapotterében tárolódik. Amennyiben megváltozik a bruttó jövedelem, vagy bármilyen azt befolyásoló érték, a nettó jövedelem mindig automatikusan frissüljön.  (2pt)
   -[ ] A havi bruttó bért egy csúszka segítségével is lehet változtatni, és ilyenkor a nettó bér automatikusan frissül (1pt)
@@ -52,7 +52,7 @@ Tehát léteznek a következő komponensek:
 
 - Plusz pontok:
   -[ ] LocalStorage: A háztartásban élő személyeket, és a hozzájuk tartozó adatokat LocalStorage-ba mentjük. Ha ide el van mentve már egy háztartáshoz tartozó adatcsomag, az ő adataikkal fog az alkalmazásunk megjelenni. Ehhez készíts egy saját Hook-ot, amivel a LocalStorage-ba el tudod menteni az értékeket. (3 pont)
-  -[ ] Felugró ablak: Készíts egy felugró ablakot (Modal), amivel a friss házasokra vonatkozó házasságkötés dátumát meg tudjuk adni! (2 pont)
+  -[X] Felugró ablak: Készíts egy felugró ablakot (Modal), amivel a friss házasokra vonatkozó házasságkötés dátumát meg tudjuk adni! (2 pont)
 
 
 ```

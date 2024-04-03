@@ -27,9 +27,14 @@ const SalaryCalculator = () => {
     return grossSalary - szja - tb;
   }
 
-  function handleGrossSalaryChange(event) {
+  function handleEventGrossSalaryChange(event) {
     let newGrossSalary = parseInt(event.target.value || 0);
     if (isNaN(newGrossSalary)) return;
+    setGrossSalary(newGrossSalary);
+    setNetSalary(calculateNetSalary(newGrossSalary));
+  }
+
+  function handleSliderSalaryChange([newGrossSalary]) {
     setGrossSalary(newGrossSalary);
     setNetSalary(calculateNetSalary(newGrossSalary));
   }
@@ -47,9 +52,9 @@ const SalaryCalculator = () => {
       <CardContent>
         <TextboxWithLabel label="Családtag neve" description="Add meg a családtag nevét!" placeholder="Bendi" />
 
-        <TextboxWithLabel label="Bruttó bér" description="Add meg a bruttó béredet!" placeholder="100000 Ft" value={grossSalary} onChange={handleGrossSalaryChange} />
+        <TextboxWithLabel label="Bruttó bér" description="Add meg a bruttó béredet!" placeholder="100000 Ft" value={grossSalary} onChange={handleEventGrossSalaryChange} />
 
-        <Slider id="slider" min={0} max={1000000} step={1} onChange={handleGrossSalaryChange} value={[grossSalary]} />
+        <Slider min={0} max={1000000} step={1} value={[grossSalary]} onValueChange={handleSliderSalaryChange} /><br />
         <Button variant="outline">-1%</Button>
         <Button variant="outline">-5%</Button>
         <Button variant="outline">+1%</Button>

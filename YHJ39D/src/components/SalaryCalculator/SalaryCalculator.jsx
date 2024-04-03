@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch"
 
 import TextboxWithLabel from "@/components/TextboxWithLabel/TextboxWithLabel"
 import FamilyTaxCredit from "@/components/SalaryCalculator/components/FamilyTaxCredit"
+import FreshMarried from "@/components/SalaryCalculator/components/FreshMarried"
 
 const SalaryCalculator = () => {
   return (
@@ -38,7 +39,7 @@ const SalaryCalculator = () => {
 
         <big>Kedvezmények</big><br />
         <Switch id="under25yearsSZJA" /><Label htmlFor="under25yearsSZJA">25 év alattiak SZJA mentessége</Label><br />
-        <Switch id="freshMarried" /><Label htmlFor="freshMarried">Friss házasok adókedvezménye</Label><br />
+        <FreshMarried />
         <Switch id="personalTaxCredit" /><Label htmlFor="personalTaxCredit">Személyes adókedvezmény</Label><br />
         <FamilyTaxCredit />
 

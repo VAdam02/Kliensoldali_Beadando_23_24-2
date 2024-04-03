@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button";
+
+import NumberWithPlusMinus from "@/components/NumberWithPlusMinus/NumberWithPlusMinus";
 
 const FamilyTaxCredit = () => {
     const [toggle, setToggle] = useState(false);
 
     const handleToggle = () => {
-        console.log(toggle)
         setToggle(!toggle);
     }
 
@@ -16,13 +16,9 @@ const FamilyTaxCredit = () => {
             <Switch id="familyTaxCredit" onCheckedChange={handleToggle} /><Label htmlFor="familyTaxCredit">Családi adókedvezmény</Label>
             {toggle && (
                 <div>
-                    <Button variant="outline">-</Button>
-                    <medium>1</medium>
-                    <Button variant="outline">+</Button>
-                    <medium>Eltartott, ebből kedvezményezett:</medium>
-                    <Button variant="outline">-</Button>
-                    <medium>1</medium>
-                    <Button variant="outline">+</Button>
+                    <NumberWithPlusMinus number={1} />
+                    Eltartott, ebből kedvezményezett:
+                    <NumberWithPlusMinus number={0} />
                 </div>
             )}
         </div>

@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import {
   Card,
   CardContent,
@@ -11,10 +13,27 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 
 import TextboxWithLabel from "@/components/TextboxWithLabel/TextboxWithLabel"
-import FamilyTaxCredit from "@/components/SalaryCalculator/components/FamilyTaxCredit"
-import FreshMarried from "@/components/SalaryCalculator/components/FreshMarried"
+import FamilyTaxCredit from "./components/FamilyTaxCredit"
+import FreshMarried from "./components/FreshMarried"
+import NetSalary from "./components/NetSalary"
 
 const SalaryCalculator = () => {
+  const [grossSalary, setGrossSalary] = useState(100000);
+  const [netSalary, setNetSalary] = useState(calculateNetSalary(grossSalary));
+
+  function calculateNetSalary(grossSalary) {
+    let szja = grossSalary * 0.15;
+    let tb = grossSalary * 0.185;
+    return grossSalary - szja - tb;
+  }
+
+  function handleGrossSalaryChange(event) {
+    let newGrossSalary = parseInt(event.target.value || 0);
+    if (isNaN(newGrossSalary)) return;
+    setGrossSalary(newGrossSalary);
+    setNetSalary(calculateNetSalary(newGrossSalary));
+  }
+
   return (
   <div>
     <div>
@@ -28,9 +47,9 @@ const SalaryCalculator = () => {
       <CardContent>
         <TextboxWithLabel label="Családtag neve" description="Add meg a családtag nevét!" placeholder="Bendi" />
 
-        <TextboxWithLabel label="Bruttó bér" description="Add meg a bruttó béredet!" placeholder="100.000 Ft" />
+        <TextboxWithLabel label="Bruttó bér" description="Add meg a bruttó béredet!" placeholder="100000 Ft" value={grossSalary} onChange={handleGrossSalaryChange} />
 
-        <Slider defaultValue={[100000]} max={10000000} step={1} />
+        <Slider id="slider" min={0} max={1000000} step={1} onChange={handleGrossSalaryChange} value={[grossSalary]} />
         <Button variant="outline">-1%</Button>
         <Button variant="outline">-5%</Button>
         <Button variant="outline">+1%</Button>
@@ -45,8 +64,7 @@ const SalaryCalculator = () => {
 
       </CardContent>
       <CardFooter>
-        <big>Számított nettó bér</big><br />
-        <big>100.000 Ft</big><br />
+        <NetSalary netSalary={netSalary} />
       </CardFooter>
     </Card>
   </div>);

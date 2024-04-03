@@ -11,10 +11,10 @@ import {
 
 import { format, set } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
+import PermittedLabel from "@/components/PermitedLabel/PermitedLabel"
 
 const freshMarried = () => {
     const [date, setDate] = useState(null);
@@ -52,12 +52,7 @@ const freshMarried = () => {
                 </Popover>
             </PopoverContent>
         </Popover>
-        {permitted && (
-            <div>Jogosult</div>
-        )}
-        {!permitted && (
-            <div>Nem Jogosult</div>
-        )}
+        <PermittedLabel permitted={permitted} />
         </div>
     );
 }

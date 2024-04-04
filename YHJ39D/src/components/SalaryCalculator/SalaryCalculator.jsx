@@ -39,6 +39,27 @@ const SalaryCalculator = () => {
     setNetSalary(calculateNetSalary(newGrossSalary));
   }
 
+  function handleButtonSalaryChange(event) {
+    let newGrossSalary = grossSalary;
+    switch (event.target.innerText) {
+      case "-5%":
+        newGrossSalary = grossSalary * 0.95;
+        break;
+      case "-1%":
+        newGrossSalary = grossSalary * 0.99;
+        break;
+      case "+1%":
+        newGrossSalary = grossSalary * 1.01;
+        break;
+      case "+5%":
+        newGrossSalary = grossSalary * 1.05;
+        break;
+    }
+
+    setGrossSalary(newGrossSalary);
+    setNetSalary(calculateNetSalary(newGrossSalary));
+  }
+
   return (
   <div>
     <div>
@@ -55,10 +76,10 @@ const SalaryCalculator = () => {
         <TextboxWithLabel label="Bruttó bér" description="Add meg a bruttó béredet!" placeholder="100000 Ft" value={grossSalary} onChange={handleEventGrossSalaryChange} />
 
         <Slider min={0} max={1000000} step={1} value={[grossSalary]} onValueChange={handleSliderSalaryChange} /><br />
-        <Button variant="outline">-1%</Button>
-        <Button variant="outline">-5%</Button>
-        <Button variant="outline">+1%</Button>
-        <Button variant="outline">+5%</Button>
+        <Button variant="outline" onClick={handleButtonSalaryChange}>-5%</Button>
+        <Button variant="outline" onClick={handleButtonSalaryChange}>-1%</Button>
+        <Button variant="outline" onClick={handleButtonSalaryChange}>+1%</Button>
+        <Button variant="outline" onClick={handleButtonSalaryChange}>+5%</Button>
         <br />
 
         <big>Kedvezmények</big><br />

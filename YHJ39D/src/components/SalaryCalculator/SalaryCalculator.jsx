@@ -19,6 +19,7 @@ import NetSalary from "./components/NetSalary"
 import Under25YearsSZJA from "./components/Under25YearsSZJA"
 
 const SalaryCalculator = () => {
+  const [name, setName] = useState("Bendi");
   const [grossSalary, setGrossSalary] = useState(100000);
   const [isUnder25YearsSZJA, setUnder25YearsSZJA] = useState(false);
   const [isFreshMarried, setFreshMarried] = useState(false);
@@ -37,6 +38,10 @@ const SalaryCalculator = () => {
       case 3: bonus += 33000*dependent; break;
     }
     return grossSalary - szja - tb + bonus;
+  }
+
+  function handleNameChange(event) {
+    setName(event.target.value)
   }
 
   function handleEventGrossSalaryChange(event) {
@@ -97,10 +102,10 @@ const SalaryCalculator = () => {
     </div>
     <Card>
       <CardHeader>
-        <CardTitle>BENDI BÉRÉNEK KISZÁMÍTÁSA</CardTitle>
+        <CardTitle>{name} BÉRÉNEK KISZÁMÍTÁSA</CardTitle>
       </CardHeader>
       <CardContent>
-        <TextboxWithLabel label="Családtag neve" description="Add meg a családtag nevét!" placeholder="Bendi" />
+        <TextboxWithLabel label="Családtag neve" description="Add meg a családtag nevét!" placeholder="Bendi" value={name} onChange={handleNameChange} />
 
         <TextboxWithLabel label="Bruttó bér" description="Add meg a bruttó béredet!" placeholder="100000 Ft" value={grossSalary} onChange={handleEventGrossSalaryChange} />
 

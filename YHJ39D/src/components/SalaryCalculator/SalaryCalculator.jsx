@@ -21,24 +21,26 @@ import Under25YearsSZJA from "./components/Under25YearsSZJA"
 const SalaryCalculator = () => {
   const [grossSalary, setGrossSalary] = useState(100000);
   const [isUnder25YearsSZJA, setUnder25YearsSZJA] = useState(false);
-  const [netSalary, setNetSalary] = useState(calculateNetSalary(grossSalary, isUnder25YearsSZJA));
+  const [isFreshMarried, setFreshMarried] = useState(false);
+  const [netSalary, setNetSalary] = useState(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
 
-  function calculateNetSalary(grossSalary, isUnder25YearsSZJA) {
+  function calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried) {
     let szja = (isUnder25YearsSZJA ? Math.max(0, grossSalary - 499952) : grossSalary) * 0.15;
     let tb = grossSalary * 0.185;
-    return grossSalary - szja - tb;
+    let bonus = isFreshMarried ? 5000 : 0;
+    return grossSalary - szja - tb + bonus;
   }
 
   function handleEventGrossSalaryChange(event) {
-    let newGrossSalary = parseInt(event.target.value || 0);
-    if (isNaN(newGrossSalary)) return;
-    setGrossSalary(newGrossSalary);
-    setNetSalary(calculateNetSalary(newGrossSalary, isUnder25YearsSZJA));
+    let grossSalary = parseInt(event.target.value || 0);
+    if (isNaN(grossSalary)) return;
+    setGrossSalary(grossSalary);
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
   }
 
-  function handleSliderSalaryChange([newGrossSalary]) {
-    setGrossSalary(newGrossSalary);
-    setNetSalary(calculateNetSalary(newGrossSalary), isUnder25YearsSZJA);
+  function handleSliderSalaryChange([grossSalary]) {
+    setGrossSalary(grossSalary);
+    setNetSalary(calculateNetSalary(grossSalary), isUnder25YearsSZJA, isFreshMarried);
   }
 
   function handleButtonSalaryChange(event) {
@@ -59,12 +61,17 @@ const SalaryCalculator = () => {
     }
     setNetSalary
     setGrossSalary(newGrossSalary);
-    setNetSalary(calculateNetSalary(newGrossSalary, isUnder25YearsSZJA));
+    setNetSalary(calculateNetSalary(newGrossSalary, isUnder25YearsSZJA, isFreshMarried));
   }
 
   function handleUnder25YearsSZJAChange(isUnder25YearsSZJA) {
     setUnder25YearsSZJA(isUnder25YearsSZJA);
-    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA));
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
+  }
+
+  function handleFreshMarriedChange(isFreshMarried) {
+    setFreshMarried(isFreshMarried);
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
   }
 
   return (
@@ -91,7 +98,7 @@ const SalaryCalculator = () => {
 
         <big>Kedvezmények</big><br />
         <Under25YearsSZJA checked={isUnder25YearsSZJA} onCheckedChange={handleUnder25YearsSZJAChange} />
-        <FreshMarried />
+        <FreshMarried checked={isFreshMarried} onPermittedChange={handleFreshMarriedChange} />
         <Switch id="personalTaxCredit" /><Label htmlFor="personalTaxCredit">Személyes adókedvezmény</Label><br />
         <FamilyTaxCredit />
 

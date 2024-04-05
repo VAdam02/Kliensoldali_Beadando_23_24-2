@@ -4,21 +4,35 @@ import { Label } from "@/components/ui/label"
 
 import NumberWithPlusMinus from "@/components/NumberWithPlusMinus/NumberWithPlusMinus";
 
-const FamilyTaxCredit = () => {
-    const [toggle, setToggle] = useState(false);
+const FamilyTaxCredit = ({ checked, dependentNumber, dependentBeneficiaryNumber, maxDependentBeneficiary, onChange }) => {
+    const [isFamilyTaxCredit, setFamilyTaxCredit] = useState(checked);
+    const [dependent, setDependent] = useState(dependentNumber);
+    const [dependentBeneficiary, setDependentBeneficiary] = useState(dependentBeneficiaryNumber);
 
     const handleToggle = () => {
-        setToggle(!toggle);
+        const newIsFamilyTaxCredit = !isFamilyTaxCredit;
+        setFamilyTaxCredit(newIsFamilyTaxCredit);
+        onChange(newIsFamilyTaxCredit, dependent, dependentBeneficiary);
+    }
+
+    const handleDependentChange = (dependent) => {
+        setDependent(dependent);
+        onChange(isFamilyTaxCredit, dependent, dependentBeneficiary);
+    }
+
+    const handleDependentBeneficiaryChange = (dependentBeneficiary) => {
+        setDependentBeneficiary(dependentBeneficiary);
+        onChange(isFamilyTaxCredit, dependent, dependentBeneficiary);
     }
 
     return (
         <div>
             <Switch id="familyTaxCredit" onCheckedChange={handleToggle} /><Label htmlFor="familyTaxCredit">Családi adókedvezmény</Label>
-            {toggle && (
+            {isFamilyTaxCredit && (
                 <div>
-                    <NumberWithPlusMinus number={1} />
+                    <NumberWithPlusMinus number={dependent} min={0} onChange={handleDependentChange} />
                     Eltartott, ebből kedvezményezett:
-                    <NumberWithPlusMinus number={0} />
+                    <NumberWithPlusMinus number={dependentBeneficiary} min={0} max={Math.min(dependent, maxDependentBeneficiary)} onChange={handleDependentBeneficiaryChange} />
                 </div>
             )}
         </div>

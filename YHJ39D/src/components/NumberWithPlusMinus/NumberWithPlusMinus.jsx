@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const NumberWithPlusMinus = ({ number, min = null, max = null }) => {
-    const [ num, setNum ] = useState(number);
-    const [ minNum, setMinNum ] = useState(min);
-    const [ maxNum, setMaxNum ] = useState(max);
+const NumberWithPlusMinus = ({ number, min, max, onChange }) => {
+    const [ num, setNum ] = useState(checkNumber(number));
+
+    if (checkNumber(num) !== num) { //check if the bounds have changed
+        let newNum = checkNumber(num);
+        setNum(newNum);
+        setTimeout(() => { onChange(newNum); }, 0); //cheat to avoid updating state during render
+    }
+
+    function checkNumber(num) {
+        if (min != null && num < min) return min;
+        if (max != null && num > max) return max;
+        return num;
+    }
 
     const handlePlus = () => {
-        if (maxNum != null && num >= maxNum) { setNum(maxNum); return; }
-        setNum(num + 1);
+        const newNum = checkNumber(num + 1);
+        if (newNum == num) return;
+        setNum(newNum);
+        onChange(newNum);
     }
 
     const handleMinus = () => {
-        if (minNum != null && num <= minNum) { setNum(minNum); return; }
-        setNum(num - 1);
+        const newNum = checkNumber(num - 1);
+        if (newNum == num) return;
+        setNum(newNum);
+        onChange(newNum);
     }
 
     return (

@@ -22,12 +22,20 @@ const SalaryCalculator = () => {
   const [grossSalary, setGrossSalary] = useState(100000);
   const [isUnder25YearsSZJA, setUnder25YearsSZJA] = useState(false);
   const [isFreshMarried, setFreshMarried] = useState(false);
-  const [netSalary, setNetSalary] = useState(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
+  const [familyTaxCredit, setFamilyTaxCredit] = useState(false);
+  const [dependent, setDependent] = useState(0);
+  const [dependentBeneficiary, setDependentBeneficiary] = useState(0);
+  const [netSalary, setNetSalary] = useState(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary));
 
-  function calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried) {
+  function calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary) {
     let szja = (isUnder25YearsSZJA ? Math.max(0, grossSalary - 499952) : grossSalary) * 0.15;
     let tb = grossSalary * 0.185;
     let bonus = isFreshMarried ? 5000 : 0;
+    switch (dependentBeneficiary) {
+      case 1: bonus += 10000*dependent; break;
+      case 2: bonus += 20000*dependent; break;
+      case 3: bonus += 33000*dependent; break;
+    }
     return grossSalary - szja - tb + bonus;
   }
 
@@ -35,12 +43,12 @@ const SalaryCalculator = () => {
     let grossSalary = parseInt(event.target.value || 0);
     if (isNaN(grossSalary)) return;
     setGrossSalary(grossSalary);
-    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary));
   }
 
   function handleSliderSalaryChange([grossSalary]) {
     setGrossSalary(grossSalary);
-    setNetSalary(calculateNetSalary(grossSalary), isUnder25YearsSZJA, isFreshMarried);
+    setNetSalary(calculateNetSalary(grossSalary), isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary);
   }
 
   function handleButtonSalaryChange(event) {
@@ -61,17 +69,24 @@ const SalaryCalculator = () => {
     }
     setNetSalary
     setGrossSalary(newGrossSalary);
-    setNetSalary(calculateNetSalary(newGrossSalary, isUnder25YearsSZJA, isFreshMarried));
+    setNetSalary(calculateNetSalary(newGrossSalary, isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary));
   }
 
   function handleUnder25YearsSZJAChange(isUnder25YearsSZJA) {
     setUnder25YearsSZJA(isUnder25YearsSZJA);
-    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary));
   }
 
   function handleFreshMarriedChange(isFreshMarried) {
     setFreshMarried(isFreshMarried);
-    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried));
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary));
+  }
+
+  function handleFamilyTaxCreditChange(isFamilyTaxCredit, dependent, dependentBeneficiary) {
+    setFamilyTaxCredit(isFamilyTaxCredit);
+    setDependent(dependent);
+    setDependentBeneficiary(dependentBeneficiary);
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA, isFreshMarried, dependent, dependentBeneficiary));
   }
 
   return (
@@ -100,7 +115,7 @@ const SalaryCalculator = () => {
         <Under25YearsSZJA checked={isUnder25YearsSZJA} onCheckedChange={handleUnder25YearsSZJAChange} />
         <FreshMarried checked={isFreshMarried} onPermittedChange={handleFreshMarriedChange} />
         <Switch id="personalTaxCredit" /><Label htmlFor="personalTaxCredit">Személyes adókedvezmény</Label><br />
-        <FamilyTaxCredit />
+        <FamilyTaxCredit checked={familyTaxCredit} dependentNumber={dependent} dependentBeneficiaryNumber={dependentBeneficiary} maxDependentBeneficiary={3} onChange={handleFamilyTaxCreditChange} />
 
       </CardContent>
       <CardFooter>

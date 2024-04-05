@@ -16,13 +16,15 @@ import TextboxWithLabel from "@/components/TextboxWithLabel/TextboxWithLabel"
 import FamilyTaxCredit from "./components/FamilyTaxCredit"
 import FreshMarried from "./components/FreshMarried"
 import NetSalary from "./components/NetSalary"
+import Under25YearsSZJA from "./components/Under25YearsSZJA"
 
 const SalaryCalculator = () => {
   const [grossSalary, setGrossSalary] = useState(100000);
-  const [netSalary, setNetSalary] = useState(calculateNetSalary(grossSalary));
+  const [isUnder25YearsSZJA, setUnder25YearsSZJA] = useState(false);
+  const [netSalary, setNetSalary] = useState(calculateNetSalary(grossSalary, isUnder25YearsSZJA));
 
-  function calculateNetSalary(grossSalary) {
-    let szja = grossSalary * 0.15;
+  function calculateNetSalary(grossSalary, isUnder25YearsSZJA) {
+    let szja = (isUnder25YearsSZJA ? Math.max(0, grossSalary - 499952) : grossSalary) * 0.15;
     let tb = grossSalary * 0.185;
     return grossSalary - szja - tb;
   }
@@ -31,12 +33,12 @@ const SalaryCalculator = () => {
     let newGrossSalary = parseInt(event.target.value || 0);
     if (isNaN(newGrossSalary)) return;
     setGrossSalary(newGrossSalary);
-    setNetSalary(calculateNetSalary(newGrossSalary));
+    setNetSalary(calculateNetSalary(newGrossSalary, isUnder25YearsSZJA));
   }
 
   function handleSliderSalaryChange([newGrossSalary]) {
     setGrossSalary(newGrossSalary);
-    setNetSalary(calculateNetSalary(newGrossSalary));
+    setNetSalary(calculateNetSalary(newGrossSalary), isUnder25YearsSZJA);
   }
 
   function handleButtonSalaryChange(event) {
@@ -55,9 +57,14 @@ const SalaryCalculator = () => {
         newGrossSalary = grossSalary * 1.05;
         break;
     }
-
+    setNetSalary
     setGrossSalary(newGrossSalary);
-    setNetSalary(calculateNetSalary(newGrossSalary));
+    setNetSalary(calculateNetSalary(newGrossSalary, isUnder25YearsSZJA));
+  }
+
+  function handleUnder25YearsSZJAChange(isUnder25YearsSZJA) {
+    setUnder25YearsSZJA(isUnder25YearsSZJA);
+    setNetSalary(calculateNetSalary(grossSalary, isUnder25YearsSZJA));
   }
 
   return (
@@ -83,7 +90,7 @@ const SalaryCalculator = () => {
         <br />
 
         <big>Kedvezmények</big><br />
-        <Switch id="under25yearsSZJA" /><Label htmlFor="under25yearsSZJA">25 év alattiak SZJA mentessége</Label><br />
+        <Under25YearsSZJA checked={isUnder25YearsSZJA} onCheckedChange={handleUnder25YearsSZJAChange} />
         <FreshMarried />
         <Switch id="personalTaxCredit" /><Label htmlFor="personalTaxCredit">Személyes adókedvezmény</Label><br />
         <FamilyTaxCredit />

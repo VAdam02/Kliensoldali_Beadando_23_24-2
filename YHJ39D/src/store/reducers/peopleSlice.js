@@ -1,9 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const calculateNetSalary = (person) => {
-    const {grossSalary, isUnder25YearsSZJA, isFreshMarried, isFamilyTaxCredit, dependent, dependentBeneficiary} = person;
+    const {grossSalary, isUnder25YearsSZJA, isFreshMarried, isPersonalTaxCredit, isFamilyTaxCredit, dependent, dependentBeneficiary} = person;
     let szja = (isUnder25YearsSZJA ? Math.max(0, grossSalary - 499952) : grossSalary) * 0.15;
     let tb = grossSalary * 0.185;
+    let personalTaxCredit = (isPersonalTaxCredit ? 77300 : 0);
     let bonus = isFreshMarried ? 5000 : 0;
     if (isFamilyTaxCredit) {
         switch (dependentBeneficiary) {
@@ -11,8 +12,8 @@ const calculateNetSalary = (person) => {
         case 2: bonus += 20000*dependent; break;
         case 3: bonus += 33000*dependent; break;
     }}
-    let netSalary = grossSalary - szja - tb + bonus;
-    return netSalary;
+    let netSalary = grossSalary - szja - tb + personalTaxCredit + bonus;
+    return Math.min(netSalary, grossSalary);
 }
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
         grossSalary: 100000,
         isUnder25YearsSZJA: false,
         isFreshMarried: false,
+        isPersonalTaxCredit: false,
         isFamilyTaxCredit: false,
         dependent: 0,
         dependentBeneficiary: 0,

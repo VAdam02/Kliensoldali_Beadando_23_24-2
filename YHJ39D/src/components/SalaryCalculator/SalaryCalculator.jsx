@@ -60,6 +60,10 @@ const SalaryCalculator = () => {
     dispatch(updateActivePerson({id: activePerson.id, new_values: {isFreshMarried: isFreshMarried}}));
   }
 
+  function handlePersonalTaxCreditChange(isPersonalTaxCredit) {
+    dispatch(updateActivePerson({id: activePerson.id, new_values: {isPersonalTaxCredit: isPersonalTaxCredit}}));
+  }
+
   function handleFamilyTaxCreditChange(isFamilyTaxCredit, dependent, dependentBeneficiary) {
     dispatch(updateActivePerson({id: activePerson.id, new_values: {isFamilyTaxCredit: isFamilyTaxCredit, dependent: dependent, dependentBeneficiary: dependentBeneficiary}}));
   }
@@ -89,7 +93,7 @@ const SalaryCalculator = () => {
         <big>Kedvezmények</big><br />
         <Under25YearsSZJA checked={activePerson.isUnder25YearsSZJA} onCheckedChange={handleUnder25YearsSZJAChange} />
         <FreshMarried checked={activePerson.isFreshMarried} onPermittedChange={handleFreshMarriedChange} />
-        <Switch id="personalTaxCredit" /><Label htmlFor="personalTaxCredit">Személyes adókedvezmény</Label><br />
+        <Switch id="personalTaxCredit" onCheckedChange={handlePersonalTaxCreditChange} checked={activePerson.isPersonalTaxCredit} /><Label htmlFor="personalTaxCredit">Személyes adókedvezmény</Label><br />
         <FamilyTaxCredit checked={activePerson.isFamilyTaxCredit} dependentNumber={activePerson.dependent} dependentBeneficiaryNumber={activePerson.dependentBeneficiary} maxDependentBeneficiary={3} onChange={handleFamilyTaxCreditChange} />
 
       </CardContent>

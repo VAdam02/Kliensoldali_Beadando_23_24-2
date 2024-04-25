@@ -1,10 +1,12 @@
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
+import { Provider } from "react-redux";
+import store from "@/store/store.js";
 
 const HouseholdSalaryCalculator = () => {
   return (
-    <>
+    <Provider store={store}>
       <header>
         <FamilyMemberTabs />
       </header>
@@ -12,7 +14,7 @@ const HouseholdSalaryCalculator = () => {
         <SalaryCalculator />
         <HouseholdSummary />
       </main>
-    </>
+    </Provider>
   );
 };
 

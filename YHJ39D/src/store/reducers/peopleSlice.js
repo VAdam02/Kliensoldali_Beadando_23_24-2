@@ -16,20 +16,25 @@ const calculateNetSalary = (person) => {
     return Math.min(netSalary, grossSalary);
 }
 
+const newPerson = {
+    id: 0,
+    name: "Bendi",
+    grossSalary: 100000,
+    isUnder25YearsSZJA: false,
+    isFreshMarried: false,
+    isPersonalTaxCredit: false,
+    isFamilyTaxCredit: false,
+    dependent: 0,
+    dependentBeneficiary: 0,
+    netSalary: 0
+};
+
 const initialState = {
     people: [{
-        id: 0,
-        name: "Bendi",
-        grossSalary: 100000,
-        isUnder25YearsSZJA: false,
-        isFreshMarried: false,
-        isPersonalTaxCredit: false,
-        isFamilyTaxCredit: false,
-        dependent: 0,
-        dependentBeneficiary: 0,
-        netSalary: 0
+        ...newPerson
     }],
-    activePersonIndex: 0
+    activePersonIndex: 0,
+    nextId: 1
 };
 initialState.people[0].netSalary = calculateNetSalary(initialState.people[0]);
 
@@ -37,8 +42,12 @@ const peopleSlice = createSlice({
     name: 'people',
     initialState,
     reducers: {
-        addPerson(state, {payload}) {
-            state.people.push(payload);
+        createPerson(state) {
+            const createdPerson = {...newPerson};
+            createdPerson.id = state.nextId++;
+            createdPerson.netSalary = calculateNetSalary(createdPerson);
+            state.people.push(createdPerson);
+            state.activePersonIndex = state.people.length - 1;
         },
 
         removePerson(state, {payload}) {
@@ -60,5 +69,5 @@ const peopleSlice = createSlice({
     }
 });
 
-export const {addPerson, removePerson, setActivePerson, updateActivePerson} = peopleSlice.actions;
+export const {createPerson: createPerson, removePerson, setActivePerson, updateActivePerson} = peopleSlice.actions;
 export default peopleSlice.reducer;

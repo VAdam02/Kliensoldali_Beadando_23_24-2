@@ -69,11 +69,6 @@ const SalaryCalculator = () => {
   }
 
   return (
-  <div>
-    <div>
-      <Button variant="outline">Bendi</Button>
-      <Button variant="outline">+</Button>
-    </div>
     <Card>
       <CardHeader>
         <CardTitle>{activePerson.name} BÉRÉNEK KISZÁMÍTÁSA</CardTitle>
@@ -100,8 +95,7 @@ const SalaryCalculator = () => {
       <CardFooter>
         <NetSalary netSalary={activePerson.netSalary} />
       </CardFooter>
-    </Card>
-  </div>);
+    </Card>);
 };
 
 export default SalaryCalculator;

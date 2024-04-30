@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { updateActivePerson } from "@/store/reducers/peopleSlice";
+import { removePerson, updateActivePerson } from "@/store/reducers/peopleSlice";
 
 import {
   Card,
@@ -94,6 +94,7 @@ const SalaryCalculator = () => {
       </CardContent>
       <CardFooter>
         <NetSalary netSalary={activePerson.netSalary} />
+        <Button variant="outline" onClick={() => dispatch(removePerson(activePerson.id))}>Remove Person</Button>
       </CardFooter>
     </Card>);
 };

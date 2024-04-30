@@ -52,6 +52,15 @@ const peopleSlice = createSlice({
 
         removePerson(state, {payload}) {
             state.people = state.people.filter(person => person.id !== payload);
+            if (state.people.length === 0) {
+                const createdPerson = {...newPerson};
+                createdPerson.id = state.nextId++;
+                createdPerson.netSalary = calculateNetSalary(createdPerson);
+                state.people.push(createdPerson);
+            }
+            if (state.activePersonIndex >= state.people.length) {
+                setActivePerson(state, {payload: state.people.length - 1});
+            }
         },
         
         setActivePerson(state, {payload}) {

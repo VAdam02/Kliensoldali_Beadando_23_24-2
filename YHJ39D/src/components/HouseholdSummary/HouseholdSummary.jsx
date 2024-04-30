@@ -9,7 +9,6 @@ import {
 import { Table } from "@/components/ui/table"
 
 const HouseholdSummary = () => {
-  const dispatch = useDispatch();
   const people = useSelector(state => state.people.people);
 
   return (
@@ -21,24 +20,24 @@ const HouseholdSummary = () => {
         <Table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Gross Salary</th>
-              <th>Net Salary</th>
+              <th>Név</th>
+              <th>Bruttó bér</th>
+              <th>Nettó bér</th>
             </tr>
           </thead>
           <tbody>
             {people.map(person => (
               <tr key={person.id}>
                 <td>{person.name}</td>
-                <td>{person.grossSalary}</td>
-                <td>{person.netSalary}</td>
+                <td>{person.grossSalary}Ft</td>
+                <td>{person.netSalary}Ft</td>
               </tr>
             ))}
           </tbody>
         </Table>
       </CardContent>
       <CardFooter>
-        <p>Total net salary: {people.reduce((acc, person) => acc + person.netSalary, 0)}</p>
+        <p>Összesített nettó bevétel: {people.reduce((acc, person) => acc + person.netSalary, 0)}Ft</p>
       </CardFooter>
     </Card>
   );

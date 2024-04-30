@@ -59,7 +59,7 @@ const peopleSlice = createSlice({
                 state.people.push(createdPerson);
             }
             if (state.activePersonIndex >= state.people.length) {
-                setActivePerson(state, {payload: state.people.length - 1});
+                state.activePersonIndex = state.people.length - 1;
             }
         },
         

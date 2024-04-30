@@ -11,15 +11,11 @@ const FamilyMemberTabs = () => {
     dispatch(setActivePerson(index));
   }
 
-  function addPerson() {
-    dispatch(createPerson());
-  }
-
   return <div>
     {people.map((person, index) => {
       return <Button key={person.id} variant={index === activePersonIndex ? "primary" : "outline"} onClick={() => setActivePersonIndex(index)}>{person.name}</Button>;
     })}
-    <Button onClick={addPerson}>Add Person</Button>
+    <Button onClick={() => dispatch(createPerson())}>Add Person</Button>
   </div>;
 };
 

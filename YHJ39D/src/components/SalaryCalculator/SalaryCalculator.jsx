@@ -22,7 +22,9 @@ import Under25YearsSZJA from "./components/Under25YearsSZJA"
 const SalaryCalculator = () => {
   const dispatch = useDispatch();
   const activePersonIndex = useSelector(state => state.people.activePersonIndex);
-  const activePerson = useSelector(state => state.people.people[activePersonIndex]);
+  const people = useSelector(state => state.people.people);
+  const activePerson = people[activePersonIndex];
+  if (activePerson == null) return;
 
   function handleNameChange(name) {
     dispatch(updateActivePerson({id: activePerson.id, new_values: {name: name}}));
